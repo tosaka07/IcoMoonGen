@@ -1,1 +1,3 @@
-print("Hello, world!")
+import IcoMoonGenCLI
+
+IcoMoonGenCommand.main()
