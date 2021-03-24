@@ -14,24 +14,13 @@ import ZIPFoundation
 import Rainbow
 import Yams
 
-let aaaa = """
-code:
-  - templateName: swift
-    output: output.swift
-  - templatePath: temp.yml
-    output: output2.swift
-font:
-  - fontType: ttf, woff, svg, eot
-    output: some.ttf
-"""
-
 struct Spec: Codable {
     var code: [CodeOutput] = []
     var font: [FontOutput] = []
 
     func validate() throws {
         if code.isEmpty, font.isEmpty {
-            throw ValidationError("どっちかは定義してね")
+            throw ValidationError("Choose at least one of code or font")
         }
         if !code.isEmpty {
             try code.forEach { try $0.validate() }
@@ -59,7 +48,7 @@ struct CodeOutput: Codable {
 
     func validate() throws {
         if templateName == nil, templatePath == nil {
-            throw ValidationError("どっちかは定義してね")
+            throw ValidationError("Choose at least one of templateName or templatePath")
         }
     }
 
@@ -71,7 +60,7 @@ struct CodeOutput: Codable {
             let path = Path.current + templatePath
             return try path.read(.utf8)
         }
-        throw ValidationError("どっちかは定義してね")
+        throw ValidationError("Choose at least one of templateName or templatePath")
     }
 }
 
@@ -103,7 +92,7 @@ struct GenerateCommand: ParsableCommand {
         // Load Spec
         let specPath = Path.current + self.spec
         if !specPath.exists {
-            throw ValidationError("spec がないよ")
+            throw ValidationError("Could not find spec(icomoongen.yml) file")
         }
         let spec = try loadSpec(path: specPath)
         try spec.validate()
@@ -114,14 +103,14 @@ struct GenerateCommand: ParsableCommand {
         let zipData = try inputPath.read()
 
         guard let archive = Archive(data: zipData, accessMode: .read) else {
-            throw ValidationError("アーカイブ作成できませんでした。")
+            throw ValidationError("Could not load the ZIP file.")
         }
 
         // Load svg
         let svgEntry = try archive.entry(pathExtension: "svg")
         let svgData = try archive.extract(svgEntry)
         guard let svgString = String(data: svgData, encoding: .utf8) else {
-            throw ValidationError("svg ファイルをパースできません")
+            throw ValidationError("Unable to parse svg")
         }
         let glyphs = try IcoMoonSvgParser.parse(svgString)
         let context: [String: Any] = [
@@ -165,7 +154,7 @@ extension Archive {
                 let url = URL(string: entry.path)
                 return url?.pathExtension == pathExtension
             })
-        else { throw ValidationError("\(pathExtension)ファイルがみつかりません") }
+        else { throw ValidationError("File not found \(pathExtension)") }
         return entry
     }
 
