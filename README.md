@@ -4,7 +4,7 @@ A command-line tool that generates type-safe code from IcoMoon font.
 
 ## ToDo
 
-- [ ] Support templates file
+- [ ] Support for template files in tools
 
 ## Installation
 ### Homebrew
@@ -41,11 +41,14 @@ OPTIONS:
 ### icomoongen.yml
 
 You can specify a spec with yml.
+Code supports default templates or a template file written by you.
 
 ```
 code:
   - templateName: swift
     output: output.swift
+  - templatePath: ./some-template.stencil
+    output: output.kotlin
 font:
   - type: ttf
     output: some.ttf
