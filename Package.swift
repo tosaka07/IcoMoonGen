@@ -10,14 +10,14 @@ let package = Package(
         .executable(name: "icomoongen", targets: ["IcoMoonGen"])
     ],
     dependencies: [
-        .package(url: "https://github.com/kylef/PathKit.git", from: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "0.3.2"),
-        .package(url: "https://github.com/jpsim/Yams.git", from: "4.0.4"),
-        .package(url: "https://github.com/onevcat/Rainbow.git", from: "3.2.0"),
-        .package(url: "https://github.com/stencilproject/Stencil.git", from: "0.14.0"),
-        .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.3.2"),
-        .package(url: "https://github.com/SwiftGen/StencilSwiftKit.git", from: "2.8.0"),
-        .package(url: "https://github.com/weichsel/ZIPFoundation.git", from: "0.9.12"),
+        .package(url: "https://github.com/kylef/PathKit", from: "1.0.1"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.1"),
+        .package(url: "https://github.com/jpsim/Yams", from: "4.0.6"),
+        .package(url: "https://github.com/onevcat/Rainbow", from: "4.0.1"),
+        .package(url: "https://github.com/stencilproject/Stencil", from: "0.14.1"),
+        .package(url: "https://github.com/scinfu/SwiftSoup", from: "2.3.3"),
+        .package(url: "https://github.com/SwiftGen/StencilSwiftKit", from: "2.8.0"),
+        .package(url: "https://github.com/weichsel/ZIPFoundation", from: "0.9.12"),
     ],
     targets: [
         .target(
